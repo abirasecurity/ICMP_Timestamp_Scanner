@@ -1,10 +1,6 @@
 # ICMP_Timestamp_Scanner
 A Python utility for scanning multiple IP addresses with ICMP timestamp requests using hping3.
 
-# ICMP Timestamp Scanner
-
-A Python utility for scanning multiple IP addresses with ICMP timestamp requests using hping3.
-
 ## Overview
 
 This tool automates the process of sending ICMP timestamp requests to a list of IP addresses and extracting the timestamp information from the responses. It uses the `hping3` utility to perform the scans and provides both the complete output and the extracted timestamp information.
