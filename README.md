@@ -53,28 +53,68 @@ sudo python3 icmp_ts_scanner.py ip_list.txt
 3. Review the output for each IP address
 
 ```
-Output Example
+# Sample Output for a Vulnerable Host:
 
-[+] Loaded 3 IP addresses from ip_list.txt
-
-[+] Scanning 192.168.1.1 at 2025-05-20 08:45:23 PM
+[+] Scanning 192.168.1.10 at 2025-05-22 07:30:45 PM
 
 --- Complete hping3 Output ---
-using eth0, addr: 192.168.0.100, MTU: 1500
-HPING 192.168.1.1 (eth0 192.168.1.1): icmp mode set, 28 headers + 0 data bytes
-len=40 ip=192.168.1.1 ttl=64 id=30750 tos=0 iplen=40
-icmp_seq=0 rtt=2.3 ms
-ICMP timestamp: Originate=74431552 Receive=74467670 Transmit=74467670
-ICMP timestamp RTT tsrtt=64
+using eth0, addr: 192.168.1.5, MTU: 1500
+HPING 192.168.1.10 (eth0 192.168.1.10): icmp mode set, 28 headers + 0 data bytes
+len=46 ip=192.168.1.10 ttl=64 id=6924 icmp_seq=0 rtt=2.3 ms
+ICMP timestamp: Originate=0 Receive=3845283574 Transmit=3845283574
+len=46 ip=192.168.1.10 ttl=64 id=6925 icmp_seq=1 rtt=1.8 ms
+ICMP timestamp: Originate=0 Receive=3845283575 Transmit=3845283575
 
-len=40 ip=192.168.1.1 ttl=64 id=30751 tos=0 iplen=40
-icmp_seq=1 rtt=1.8 ms
-ICMP timestamp: Originate=74432552 Receive=74468670 Transmit=74468670
-ICMP timestamp RTT tsrtt=64
+--- 192.168.1.10 hping statistic ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 1.8/2.1/2.3 ms
+————————————————
 
 --- Extracted TIMESTAMP Information ---
-ICMP timestamp: Originate=74431552 Receive=74467670 Transmit=74467670
-ICMP timestamp: Originate=74432552 Receive=74468670 Transmit=74468670
+ICMP timestamp: Originate=0 Receive=3845283574 Transmit=3845283574
+ICMP timestamp: Originate=0 Receive=3845283575 Transmit=3845283575
+
+192.168.1.10 - VULNERABLE
+____________________
+
+# Sample Output for a Not Vulnerable Host (No Response):
+
+[+] Scanning 34.44.181.215 at 2025-05-22 07:32:18 PM
+
+--- Complete hping3 Output ---
+using eth0, addr: 192.168.1.5, MTU: 1500
+HPING 34.44.181.215 (eth0 34.44.181.215): icmp mode set, 28 headers + 0 data bytes
+
+--- 34.44.181.215 hping statistic ---
+2 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+————————————————
+
+--- Extracted TIMESTAMP Information ---
+No ICMP timestamp information found in the response
+
+34.44.181.215 - NOT VULNERABLE
+____________________
+
+#Sample Output for a Not Vulnerable Host (Responds but No Timestamp):
+[+] Scanning 8.8.8.8 at 2025-05-22 07:33:42 PM
+
+--- Complete hping3 Output ---
+using eth0, addr: 192.168.1.5, MTU: 1500
+HPING 8.8.8.8 (eth0 8.8.8.8): icmp mode set, 28 headers + 0 data bytes
+len=28 ip=8.8.8.8 ttl=56 id=40894 icmp_seq=0 rtt=28.6 ms
+len=28 ip=8.8.8.8 ttl=56 id=40895 icmp_seq=1 rtt=27.9 ms
+
+--- 8.8.8.8 hping statistic ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 27.9/28.3/28.6 ms
+————————————————
+
+--- Extracted TIMESTAMP Information ---
+No ICMP timestamp information found in the response
+
+8.8.8.8 - NOT VULNERABLE
+____________________
 ```
 
 # Ethical Usage
